@@ -22,29 +22,64 @@ export default function LoginPage() {
       password,
     });
 
-    if (error) {
-      setError(error.message);
-      setLoading(false);
-      return;
-    }
+    // if (error) {
+    //   setError(error.message);
+    //   setLoading(false);
+    //   return;
+    // }
+
+    if (error || !data.user) {
+    setError(error?.message || "Login failed");
+    setLoading(false);
+    return;
+  }
 
     // fetch profile
-    const { data: profile } = await supabase
+    const { data: profile , error: profileError} = await supabase
       .from("profiles")
       .select("role")
       .eq("id", data.user.id)
       .single();
 
+      if (profileError || !profile) {
+    setError("User profile not found. Contact Super Admin.");
+    setLoading(false);
+    return;
+  }
+
+
     // role-based redirect
-    if (profile?.role === "SUPER_ADMIN") router.push("/admin/dashboard");
-    else if (profile?.role === "BRANCH_ADMIN") router.push("/branch/dashboard");
-    else if (profile?.role === "RECEPTIONIST")
+    // if (profile?.role === "SUPER_ADMIN") router.push("/admin/dashboard");
+    // else if (profile?.role === "BRANCH_ADMIN") router.push("/branch/dashboard");
+    // else if (profile?.role === "RECEPTIONIST")
+    //   router.push("/reception/inquiries");
+    // else if (profile?.role === "COUNSELOR")
+    //   router.push("/counselor/inquiries");
+    // else router.push("/unauthorized");
+
+
+
+      // role-based redirect
+  switch (profile.role) {
+    case "SUPER_ADMIN":
+      router.push("/admin/dashboard");
+      break;
+    case "BRANCH_ADMIN":
+      router.push("/branch/dashboard");
+      break;
+    case "RECEPTIONIST":
       router.push("/reception/inquiries");
-    else if (profile?.role === "COUNSELOR")
+      break;
+    case "COUNSELOR":
       router.push("/counselor/inquiries");
-    else router.push("/unauthorized");
+      break;
+    default:
+      router.push("/unauthorized");
+  }
+
 
     setLoading(false);
+
   };
 
   return (
