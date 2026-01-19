@@ -201,7 +201,7 @@ export default function LoginPage() {
     <div className="min-h-screen bg-[#f6f1ee] flex items-center justify-center">
       <form
         onSubmit={handleLogin}
-        className="bg-white w-[420px] rounded-xl shadow-lg p-8"
+        className="bg-white w-105 rounded-xl shadow-lg p-8"
       >
         <div className="flex justify-center mb-4">
           <Image src="/logo.png" alt="logo" width={70} height={70} />

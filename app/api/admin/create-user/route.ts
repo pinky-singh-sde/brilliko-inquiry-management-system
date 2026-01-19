@@ -33,21 +33,43 @@ export async function POST(req: Request) {
   }
 
   // 2️⃣ Insert profile
-  const { error: profileError } = await supabaseAdmin
-    .from("profiles")
-    .insert({
+//   const { error: profileError } = await supabaseAdmin
+//     .from("profiles")
+//     .insert({
+//       id: userData.user.id,
+//       full_name,
+//       role,
+//       branch_id: branch_id || null,
+//     });
+
+//   if (profileError) {
+//     return NextResponse.json(
+//       { error: "Profile creation failed" },
+//       { status: 500 }
+//     );
+//   }
+
+// 2️⃣ Insert / Update profile (FIX)
+const { error: profileError } = await supabaseAdmin
+  .from("profiles")
+  .upsert(
+    {
       id: userData.user.id,
       full_name,
       role,
       branch_id: branch_id || null,
-    });
+    },
+    { onConflict: "id" }
+  );
 
-  if (profileError) {
-    return NextResponse.json(
-      { error: "Profile creation failed" },
-      { status: 500 }
-    );
-  }
+if (profileError) {
+  return NextResponse.json(
+    { error: profileError.message },
+    { status: 500 }
+  );
+}
 
+
+  
   return NextResponse.json({ success: true });
 }
