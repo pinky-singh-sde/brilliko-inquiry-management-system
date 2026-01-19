@@ -8,7 +8,7 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-[#f5f5f5] flex items-center justify-center">
-      <div className="bg-white w-[420px] rounded-xl shadow-lg p-8 text-center">
+      <div className="bg-white w-105 rounded-xl shadow-lg p-8 text-center">
         <Image
           src="/logo.png"
           alt="Brilliko Institute"

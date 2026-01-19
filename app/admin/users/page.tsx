@@ -29,20 +29,46 @@ export default function UsersPage() {
 
 
   // 🔹 Fetch users
-  const fetchUsers = async () => {
-    const { data } = await supabase
+//   const fetchUsers = async () => {
+//     const { data } = await supabase
+//       .from("profiles")
+//       .select(`
+//         id,
+//         full_name,
+//         role,
+//         branch_id,
+//         branches ( id, name )
+//       `)
+//       .order("created_at", { ascending: false });
+
+//     if (data) setUsers(data);
+//   };
+
+const fetchUsers = async () => {
+    const { data, error } = await supabase
       .from("profiles")
       .select(`
         id,
         full_name,
         role,
         branch_id,
-        branches ( id, name )
+        branches:branch_id (
+          id,
+          name
+        )
       `)
-      .order("created_at", { ascending: false });
-
-    if (data) setUsers(data);
+      .order("created_at", { ascending: false })
+      .returns<Profile[]>();
+  
+    if (error) {
+      console.error(error);
+      return;
+    }
+  
+    setUsers(data ?? []);
   };
+  
+
 
   // 🔹 Fetch branches
   const fetchBranches = async () => {

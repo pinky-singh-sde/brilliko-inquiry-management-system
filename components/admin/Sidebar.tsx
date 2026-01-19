@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import Image from "next/image";
 
 const menu = [
   { name: "Dashboard", href: "/admin/dashboard" },
@@ -15,9 +16,16 @@ export default function Sidebar() {
 
   return (
     <aside className="w-64 bg-white border-r">
-      <div className="p-6 font-bold text-xl text-orange-600">
+      {/* <div className="p-6 font-bold text-xl text-orange-600">
         Brilliko Admin
-      </div>
+      </div> */}
+      <Image
+          src="/logo.png"
+          alt="Brilliko Institute"
+          width={90}
+          height={90}
+          className="mx-10 mb-4 transition-transform duration-300 hover:scale-110"
+        />
 
       <nav className="px-4 space-y-2">
         {menu.map((item) => (
