@@ -28,21 +28,7 @@ export default function UsersPage() {
   const [loading, setLoading] = useState(false);
 
 
-  // 🔹 Fetch users
-//   const fetchUsers = async () => {
-//     const { data } = await supabase
-//       .from("profiles")
-//       .select(`
-//         id,
-//         full_name,
-//         role,
-//         branch_id,
-//         branches ( id, name )
-//       `)
-//       .order("created_at", { ascending: false });
 
-//     if (data) setUsers(data);
-//   };
 
 const fetchUsers = async () => {
     const { data, error } = await supabase
@@ -86,52 +72,7 @@ const fetchUsers = async () => {
     fetchBranches();
   }, []);
 
-  // 🔹 Create user
-//   const handleCreateUser = async (e: React.FormEvent) => {
-//     e.preventDefault();
-//     setLoading(true);
 
-//     /**
-//      * IMPORTANT:
-//      * In production, this should be done using:
-//      * supabase.auth.admin.createUser() via API route
-//      * (Never expose service role key on client)
-//      */
-
-//     const { data: authData, error: authError } =
-//       await supabase.auth.signUp({
-//         email,
-//         password,
-//       });
-
-//     if (authError || !authData.user) {
-//       alert(authError?.message || "Auth failed");
-//       setLoading(false);
-//       return;
-//     }
-
-//     const { error: profileError } = await supabase
-//       .from("profiles")
-//       .insert({
-//         id: authData.user.id,
-//         full_name: fullName,
-//         role,
-//         branch_id: branchId || null,
-//       });
-
-//     if (profileError) {
-//       alert("Profile creation failed");
-//     } else {
-//       setFullName("");
-//       setEmail("");
-//       setPassword("");
-//       setRole("BRANCH_ADMIN");
-//       setBranchId("");
-//       fetchUsers();
-//     }
-
-//     setLoading(false);
-//   };
 
 const handleCreateUser = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -261,4 +202,12 @@ const handleCreateUser = async (e: React.FormEvent) => {
       </div>
     </div>
   );
+
+
+
+
+
+
+
+  
 }
