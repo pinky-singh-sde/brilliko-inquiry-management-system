@@ -190,7 +190,9 @@ export default function LoginPage() {
     const roleRedirectMap: Record<string, string> = {
       SUPER_ADMIN: "/admin/dashboard",
       BRANCH_ADMIN: "/branch/dashboard",
-      RECEPTIONIST: "/reception/inquiries",
+      // RECEPTIONIST: "/reception/inquiries",
+       RECEPTIONIST: "/reception/dashboard",
+      
       COUNSELOR: "/counselor/inquiries",
     };
 
