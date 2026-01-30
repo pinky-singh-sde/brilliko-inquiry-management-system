@@ -14,6 +14,21 @@ type Log = {
   } | null;
 };
 
+function formatDateTime(date: string) {
+  const utcDate = new Date(date + "Z"); // 👈 FORCE UTC
+
+  return utcDate.toLocaleString("en-IN", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: true,
+    timeZone: "Asia/Kolkata",
+  });
+}
+
+
 export default function InquiryTimeline({ inquiryId }: { inquiryId: string }) {
   const [logs, setLogs] = useState<Log[]>([]);
   const [loading, setLoading] = useState(true);
@@ -82,7 +97,9 @@ export default function InquiryTimeline({ inquiryId }: { inquiryId: string }) {
           <p className="text-xs text-gray-400">
             {log.profiles?.full_name ?? "System"} •{" "}
             {log.profiles?.role ?? ""} •{" "}
-            {new Date(log.created_at).toLocaleString()}
+            {/* {new Date(log.created_at).toLocaleString()} */}
+            {formatDateTime(log.created_at)}
+
           </p>
         </div>
       ))}
