@@ -193,7 +193,8 @@ export default function LoginPage() {
       // RECEPTIONIST: "/reception/inquiries",
        RECEPTIONIST: "/reception/dashboard",
       
-      COUNSELOR: "/counselor/inquiries",
+      // COUNSELOR: "/counselor/inquiries",
+      COUNSELOR: "/counselor/dashboard",
     };
 
     window.location.href = roleRedirectMap[profile.role] ?? "/unauthorized";
