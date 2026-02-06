@@ -76,6 +76,7 @@ export default function InquiryForm({
           <option>10th</option>
           <option>12th</option>
           <option>Graduate</option>
+          <option>Post Graduate</option>
         </Select>
 
         <Select name="employment_status" label="Employment Status">
@@ -93,6 +94,13 @@ export default function InquiryForm({
             <option value="">Select Course</option>
             <option>Web Development</option>
             <option>Digital Marketing</option>
+            <option>Animation</option>
+            <option>Film Making</option>
+            <option>Graphics & Web</option>
+            <option>VFX</option>
+            <option>Full Stack Developer</option>
+            
+
           </Select>
 
           {showBranchSelect && (
