@@ -13,6 +13,7 @@ type Inquiry = {
   branch: {
     name: string;
   } | null;
+  // branch: { name: string }[];
 
 };
 
@@ -72,7 +73,18 @@ export default function AdminInquiriesPage() {
       if (error) {
         console.error("Error fetching inquiries:", error);
       } else if (data) {
-        setInquiries(data as Inquiry[]);
+        // setInquiries(data as Inquiry[]);
+        const formatted: Inquiry[] = data.map((item: any) => ({
+          id: item.id,
+          student_name: item.student_name,
+          mobile_primary: item.mobile_primary,
+          status: item.status,
+          created_at: item.created_at,
+          branch: Array.isArray(item.branch)
+            ? item.branch[0] ?? null
+            : item.branch ?? null,
+        }));
+        setInquiries(formatted)
       }
       setLoading(false);
     };
@@ -97,29 +109,7 @@ export default function AdminInquiriesPage() {
         </p>
       </div>
   
-      {/* Stats Cards */}
-      {/* <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
-        {[
-          { label: "Total", value: inquiries.length },
-          { label: "New", value: inquiries.filter(i => i.status === "NEW").length },
-          { label: "Assigned", value: inquiries.filter(i => i.status === "ASSIGNED").length },
-          { label: "Follow Up", value: inquiries.filter(i => i.status === "FOLLOW_UP").length },
-          { label: "Confirmed", value: inquiries.filter(i => i.status === "ADMISSION_CONFIRMED").length },
-        ].map((item, idx) => (
-          <div
-            key={idx}
-            className="bg-white rounded-2xl shadow-sm border p-4"
-          >
-            <p className="text-xs uppercase tracking-wide text-gray-500">
-              {item.label}
-            </p>
-            <p className="text-2xl font-semibold mt-1">
-              {item.value}
-            </p>
-          </div>
-        ))}
-      </div> */}
-
+   
 
 <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
   {[
@@ -221,6 +211,7 @@ export default function AdminInquiriesPage() {
   
                   <td className="p-5 text-center text-gray-600">
                     {inq.branch?.name || "-"}
+                    
                   </td>
   
                   <td className="p-5 text-center">
