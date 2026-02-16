@@ -257,9 +257,7 @@ export default function BranchDashboard() {
   const [branchName, setBranchName] = useState("Branch");
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    fetchDashboardData();
-  }, []);
+
 
   const fetchDashboardData = async () => {
     setLoading(true);
@@ -270,16 +268,37 @@ export default function BranchDashboard() {
 
     if (!user) return;
 
+    // const { data: profile } = await supabase
+    //   .from("profiles")
+    //   .select("branch_id, branches(name)")
+    //   .eq("id", user.id)
+    //   .single();
+
+    // if (!profile?.branch_id) return;
+
+    // const branchId = profile.branch_id;
+    // setBranchName(profile.branches?.name || "Branch");
+
     const { data: profile } = await supabase
-      .from("profiles")
-      .select("branch_id, branches(name)")
-      .eq("id", user.id)
-      .single();
+  .from("profiles")
+  .select("branch_id")
+  .eq("id", user.id)
+  .single();
 
-    if (!profile?.branch_id) return;
+if (!profile?.branch_id) {
+  setLoading(false);
+  return;
+}
 
-    const branchId = profile.branch_id;
-    setBranchName(profile.branches?.name || "Branch");
+const branchId = profile.branch_id;
+
+const { data: branch } = await supabase
+  .from("branches")
+  .select("name")
+  .eq("id", branchId)
+  .single();
+
+setBranchName(branch?.name ?? "Branch");
 
     const getCount = async (status?: string) => {
       let query = supabase
@@ -320,7 +339,10 @@ export default function BranchDashboard() {
 
     setLoading(false);
   };
-
+  
+  useEffect(() => {
+    fetchDashboardData();
+  }, []);
   /* ---------------- LOADING ---------------- */
 
   if (loading) {
